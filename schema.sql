@@ -12,5 +12,8 @@ CREATE TABLE IF NOT EXISTS students (
     phone      VARCHAR(20)  NULL,
     course     VARCHAR(100) NOT NULL,
     age        INT          NOT NULL,
+    photo      VARCHAR(255) NULL,      -- file name of the uploaded photo
     created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+

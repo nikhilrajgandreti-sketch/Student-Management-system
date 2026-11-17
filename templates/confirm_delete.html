@@ -3,15 +3,15 @@
 {% block title %}Delete Student{% endblock %}
 
 {% block content %}
-  <section class="card form-card">
-    <h2>Delete student?</h2>
-    <p>This will permanently remove <strong>{{ student.name }}</strong> ({{ student.email }}).</p>
+<section class="card form-card">
+  <h2>Delete student?</h2>
+  <p>This will permanently remove <strong>{{ student.name }}</strong> ({{ student.email }}).</p>
 
-    <form method="post" action="/delete/{{ student.id }}">
-      <div class="form-actions">
-        <a class="btn" href="/">Cancel</a>
-        <button type="submit" class="btn btn-danger">Yes, delete</button>
-      </div>
-    </form>
-  </section>
+  <form method="post" action="/delete/{{ student.id }}">
+    <div class="form-actions">
+      <a class="btn" href="/">Cancel</a>
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+    </div>
+  </form>
+</section>
 {% endblock %}

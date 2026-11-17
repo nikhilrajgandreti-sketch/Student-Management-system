@@ -8,6 +8,7 @@ A full-stack CRUD web application for managing student records, built with **Fas
 - **Search** by name, email or course
 - **Dashboard stats:** total students, number of distinct courses and average age
 - **Validation on both sides:** HTML5 form constraints in the browser, plus server-side checks
+- **Student photos:** upload, replace or remove a photo; avatars appear in the list (initials are shown when there is no photo)
 - **Duplicate protection:** a unique email constraint with a friendly error message
 - **Delete confirmation page** to prevent accidental deletions
 - **Automatic setup:** the database and table are created on first start
@@ -39,7 +40,8 @@ student-management/
 │   ├── form.html            # Add / edit form (shared template)
 │   └── confirm_delete.html  # Delete confirmation page
 └── static/
-    └── style.css            # Styling
+    ├── style.css            # Styling
+    └── uploads/             # Uploaded student photos (created automatically, not tracked by Git)
 ```
 
 ## Routes
@@ -63,9 +65,12 @@ CREATE TABLE students (
     phone      VARCHAR(20)  NULL,
     course     VARCHAR(100) NOT NULL,
     age        INT          NOT NULL,
+    photo      VARCHAR(255) NULL,
     created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ```
+
+Only the photo's file name is stored in the database. The image itself is saved in `static/uploads/` under a random name.
 
 ## Getting Started
 
@@ -148,5 +153,6 @@ CREATE TABLE students (
 | Phone  | Optional, up to 20 characters       |
 | Course | Required, 2 to 100 characters       |
 | Age    | Required, whole number from 16 to 100 |
+| Photo  | Optional, JPG, PNG or WEBP, up to 2 MB (the file type is checked by content, not by name) |
 
 

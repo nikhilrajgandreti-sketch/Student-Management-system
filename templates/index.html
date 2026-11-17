@@ -1,65 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if message %}
-    <p class="alert alert-success">{{ message }}</p>
-  {% endif %}
+{% if message %}
+<p class="alert alert-success">{{ message }}</p>
+{% endif %}
 
-  <section class="stats">
-    <div class="stat-card">
-      <span class="stat-label">Total students</span>
-      <span class="stat-value">{{ total }}</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Courses</span>
-      <span class="stat-value">{{ courses }}</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Average age</span>
-      <span class="stat-value">{{ avg_age if avg_age is not none else "–" }}</span>
-    </div>
-  </section>
+<section class="stats">
+  <div class="stat-card">
+    <span class="stat-label">Total students</span>
+    <span class="stat-value">{{ total }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Courses</span>
+    <span class="stat-value">{{ courses }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Average age</span>
+    <span class="stat-value">{{ avg_age if avg_age is not none else "–" }}</span>
+  </div>
+</section>
 
-  <section class="card">
-    <form class="toolbar" method="get" action="/">
-      <input type="search" name="q" value="{{ q }}" placeholder="Search by name, email or course…">
-      <button type="submit" class="btn">Search</button>
-      {% if q %}<a class="btn" href="/">Clear</a>{% endif %}
-    </form>
+<section class="card">
+  <form class="toolbar" method="get" action="/">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search by name, email or course…">
+    <button type="submit" class="btn">Search</button>
+    {% if q %}<a class="btn" href="/">Clear</a>{% endif %}
+  </form>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Course</th>
-            <th>Age</th>
-            <th class="actions-col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for s in students %}
-          <tr>
-            <td>{{ s.id }}</td>
-            <td>{{ s.name }}</td>
-            <td>{{ s.email }}</td>
-            <td>{{ s.phone or "–" }}</td>
-            <td><span class="badge">{{ s.course }}</span></td>
-            <td>{{ s.age }}</td>
-            <td class="actions">
-              <a class="btn btn-sm" href="/edit/{{ s.id }}">Edit</a>
-              <a class="btn btn-sm btn-danger" href="/delete/{{ s.id }}">Delete</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% if not students %}
-        <p class="empty">No students found.</p>
-      {% endif %}
-    </div>
-  </section>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Course</th>
+          <th>Age</th>
+          <th class="actions-col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td>{{ s.id }}</td>
+          <td>
+            <div class="name-cell">
+              {% if s.photo %}
+              <a href="/static/uploads/{{ s.photo }}" target="_blank" rel="noopener">
+                <img class="avatar" src="/static/uploads/{{ s.photo }}" alt="Photo of {{ s.name }}" loading="lazy">
+              </a>
+              {% else %}
+              <span class="avatar avatar-initial">{{ s.name[:1]|upper }}</span>
+              {% endif %}
+              <span>{{ s.name }}</span>
+            </div>
+          </td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.phone or "–" }}</td>
+          <td><span class="badge">{{ s.course }}</span></td>
+          <td>{{ s.age }}</td>
+          <td class="actions">
+            <a class="btn btn-sm" href="/edit/{{ s.id }}">Edit</a>
+            <a class="btn btn-sm btn-danger" href="/delete/{{ s.id }}">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not students %}
+    <p class="empty">No students found.</p>
+    {% endif %}
+  </div>
+</section>
 {% endblock %}
